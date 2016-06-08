@@ -2,7 +2,7 @@
 //  NovaScreens.swift
 //
 
-import Foundation
+import UIKit
 
 public protocol UIApplicationScreenDelegate: UIApplicationDelegate {
 
@@ -14,16 +14,21 @@ public protocol UIApplicationScreenDelegate: UIApplicationDelegate {
 extension UIApplication {
 
     public func startScreenNotifications() {
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        NSOperationQueue.mainQueue().addOperationWithBlock {
             if UIScreen.screens().count > 1 {
                 for screen in UIScreen.screens() {
-                    if screen != UIScreen.mainScreen() {
+                    if screen !== UIScreen.mainScreen() {
                         self.applicationDidConnectScreen(screen)
                     }
                 }
             }
 
             let center = NSNotificationCenter.defaultCenter()
+            
+            // Clear out existing notification observers to prevent multiple entries
+            center.removeObserver(self, name: UIScreenDidConnectNotification, object: nil)
+            center.removeObserver(self, name: UIScreenDidDisconnectNotification, object: nil)
+            
             center.addObserver(self, selector: #selector(UIApplication.screenDidConnectNotification(_:)), name: UIScreenDidConnectNotification, object: nil)
             center.addObserver(self, selector: #selector(UIApplication.screenDidDisconnectNotification(_:)), name: UIScreenDidDisconnectNotification, object: nil)
         }

@@ -45,13 +45,13 @@ extension UIApplication {
 // Private Extension Functions
 extension UIApplication {
     
-    func screenDidConnectNotification(_ notification: Notification) {
+    @objc func screenDidConnectNotification(_ notification: Notification) {
         if let screen = notification.object as? UIScreen {
             applicationDidConnectScreen(screen)
         }
     }
 
-    func screenDidDisconnectNotification(_ notification: Notification) {
+    @objc func screenDidDisconnectNotification(_ notification: Notification) {
         if let screen = notification.object as? UIScreen {
             applicationDidDisconnectScreen(screen)
         }

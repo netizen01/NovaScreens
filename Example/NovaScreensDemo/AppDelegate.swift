@@ -11,31 +11,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var second: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         return true
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         application.startScreenNotifications()
     }
 }
 
 extension AppDelegate: UIApplicationScreenDelegate {
     
-    func application(application: UIApplication, didConnectScreen screen: UIScreen) {
+    func application(_ application: UIApplication, didConnectScreen screen: UIScreen) {
         if second == nil {
             print("Second Screen Connected")
             second = UIWindow(frame: screen.bounds)
             second!.screen = screen
-            second!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Second")
-            second!.hidden = false
+            second!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Second")
+            second!.isHidden = false
         }
     }
     
-    func application(application: UIApplication, didDisconnectScreen screen: UIScreen) {
+    func application(_ application: UIApplication, didDisconnectScreen screen: UIScreen) {
         if second?.screen === screen {
             print("Second Screen Disconnected")
-            second?.hidden = true
+            second?.isHidden = true
             second?.rootViewController = nil
             second = nil
         }

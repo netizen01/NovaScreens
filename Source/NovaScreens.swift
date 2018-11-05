@@ -26,18 +26,18 @@ extension UIApplication {
             let center = NotificationCenter.default
             
             // Clear out existing notification observers to prevent multiple entries
-            center.removeObserver(self, name: NSNotification.Name.UIScreenDidConnect, object: nil)
-            center.removeObserver(self, name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
+            center.removeObserver(self, name: UIScreen.didConnectNotification, object: nil)
+            center.removeObserver(self, name: UIScreen.didDisconnectNotification, object: nil)
             
-            center.addObserver(self, selector: #selector(UIApplication.screenDidConnectNotification(_:)), name: NSNotification.Name.UIScreenDidConnect, object: nil)
-            center.addObserver(self, selector: #selector(UIApplication.screenDidDisconnectNotification(_:)), name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
+            center.addObserver(self, selector: #selector(UIApplication.screenDidConnectNotification(_:)), name: UIScreen.didConnectNotification, object: nil)
+            center.addObserver(self, selector: #selector(UIApplication.screenDidDisconnectNotification(_:)), name: UIScreen.didDisconnectNotification, object: nil)
         }
     }
     
     public func stopScreenNotifications() {
         let center = NotificationCenter.default
-        center.removeObserver(self, name: NSNotification.Name.UIScreenDidConnect, object: nil)
-        center.removeObserver(self, name: NSNotification.Name.UIScreenDidDisconnect, object: nil)
+        center.removeObserver(self, name: UIScreen.didConnectNotification, object: nil)
+        center.removeObserver(self, name: UIScreen.didDisconnectNotification, object: nil)
     }
 
 }
